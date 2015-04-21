@@ -67,6 +67,7 @@ class RestaurantsViewController: UIViewController, UITableViewDataSource, UITabl
         client.searchWithTerm(category, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
             self.businesses  = self.populateBusinesses(response["businesses"] as! [NSDictionary])
             self.filteredData = self.businesses
+            self.sortBusinesses()
             self.tableView.reloadData()
             
             }) { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
@@ -196,10 +197,12 @@ class RestaurantsViewController: UIViewController, UITableViewDataSource, UITabl
             self.category = category
             queryYelpAPI()
         }
+        
         if(sorter != sortBy) {
             self.sortBy = sorter
             sortBusinesses()
         }
+        
         self.searchRadius = radius
         self.dealsOn = deals
         self.switchStates = switchStates
