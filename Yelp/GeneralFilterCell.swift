@@ -8,8 +8,18 @@
 
 import UIKit
 
-class GeneralFilterCell: UITableViewCell {
+protocol GeneralFilterCellDelegate{
+    func settingsChanged(cell: GeneralFilterCell, isOn: Bool)
+}
 
+class GeneralFilterCell: UITableViewCell {
+    
+    var delegate: GeneralFilterCellDelegate?
+
+    @IBOutlet weak var nameLabel: UILabel!
+
+    @IBOutlet weak var filterSwitch: UISwitch!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,4 +31,7 @@ class GeneralFilterCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    @IBAction func switchFlipped(sender: AnyObject) {
+        delegate?.settingsChanged(self, isOn: sender.isOn)
+    }
 }
